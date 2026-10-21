@@ -46,9 +46,13 @@ for(size_t i = 0;i<contours.size();i++){
 RotatedRect rRect = minAreaRect(contours[i]);
 
 valid_light_bars.push_back(rRect);
+}
 
+if(valid_light_bars.size() == 2){
+
+for(int i = 0;i< 2;i++){
 Point2f pts[4];
-rRect.points(pts);
+valid_light_bars[i].points(pts);
 Point2f top_pt = pts[0],bottom_pt = pts[0];
 for(int k = 1;k<4;k++){
     if(pts[k].y<top_pt.y) top_pt = pts[k];
@@ -58,16 +62,14 @@ Point2f ntop_pt;
 Point2f nbottom_pt;
    ntop_pt.y = top_pt.y;
    nbottom_pt.y = bottom_pt.y;
-   ntop_pt.x = rRect.center.x;
-   nbottom_pt.x = rRect.center.x;
+   ntop_pt.x = valid_light_bars[i].center.x;
+   nbottom_pt.x = valid_light_bars[i].center.x;
 
 topPoints.push_back(ntop_pt);
 bottomPoints.push_back(nbottom_pt);
-
-
 }
 
-if(valid_light_bars.size() == 2){
+
 Point2f pts1[4],pts2[4];
 vector<Point2f> allpoints;
     valid_light_bars[0].points(pts1);
